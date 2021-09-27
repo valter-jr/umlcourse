@@ -1,5 +1,8 @@
 package com.valterjr.umlcourse.model;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +17,7 @@ public class Categoria {
     private String nome;
 
     @ManyToMany(mappedBy = "categorias")
+    @JsonIgnore
     List<Produto> produtos = new ArrayList<>();
 
     public Categoria() {
