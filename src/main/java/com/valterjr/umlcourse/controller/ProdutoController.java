@@ -1,5 +1,6 @@
 package com.valterjr.umlcourse.controller;
 
+import com.valterjr.umlcourse.model.Categoria;
 import com.valterjr.umlcourse.model.Produto;
 import com.valterjr.umlcourse.model.Produto;
 import com.valterjr.umlcourse.repositories.ProdutoRepository;
@@ -28,4 +29,10 @@ public class ProdutoController {
         Optional<Produto> obj = produtoRepository.findById(id);
         return obj.orElse(null);
     }
+
+    @PostMapping
+    public Produto insert(@RequestBody Produto produto) {
+            return produtoRepository.save(produto);
+    }
+    
 }

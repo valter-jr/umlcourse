@@ -2,6 +2,7 @@ package com.valterjr.umlcourse.controller;
 
 import com.valterjr.umlcourse.model.Categoria;
 import com.valterjr.umlcourse.repositories.CategoriaRepository;
+import com.valterjr.umlcourse.services.CategoriaService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,24 +15,24 @@ import java.util.Optional;
 @RequestMapping("/categorias")
 public class CategoriaController {
 
+
     @Autowired
-    CategoriaRepository categoriaRepository;
+    CategoriaService categoriaService;
 
     @GetMapping
     public ResponseEntity<List<Categoria>> findAll() {
-        List<Categoria> categorias = categoriaRepository.findAll();
-        return ResponseEntity.ok().body(categorias);
+        return categoriaService.listar();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Categoria findById(@PathVariable Integer id) {
-        Optional<Categoria> obj = categoriaRepository.findById(id);
-        return obj.orElse(null);
+    public ResponseEntity<?> find(@PathVariable Integer id) {
+        Categoria obj = categoriaService.find(id);
+        return ResponseEntity.ok().body(obj);
     }
 
     @PostMapping
-    public Categoria insert(@RequestBody Categoria categoria) {
-        return categoriaRepository.save(categoria);
+    public Categoria save(@RequestBody Categoria categoria) {
+        return categoriaService.salvar(categoria);
     }
 
 }
