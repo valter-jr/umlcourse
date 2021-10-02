@@ -4,6 +4,7 @@ import com.valterjr.umlcourse.model.Categoria;
 import com.valterjr.umlcourse.model.Produto;
 import com.valterjr.umlcourse.model.Produto;
 import com.valterjr.umlcourse.repositories.ProdutoRepository;
+import com.valterjr.umlcourse.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,23 +17,22 @@ import java.util.Optional;
 public class ProdutoController {
 
     @Autowired
-    ProdutoRepository produtoRepository;
+    ProdutoService produtoService;
 
     @GetMapping
     public ResponseEntity<List<Produto>> findAll() {
-        List<Produto> produtos = produtoRepository.findAll();
-        return ResponseEntity.ok().body(produtos);
+        return produtoService.listar();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Produto findById(@PathVariable Integer id) {
-        Optional<Produto> obj = produtoRepository.findById(id);
-        return obj.orElse(null);
+    public ResponseEntity<?> find(@PathVariable Integer id) {
+        Produto obj = produtoService.find(id);
+        return ResponseEntity.ok().body(obj);
     }
 
     @PostMapping
     public Produto insert(@RequestBody Produto produto) {
-            return produtoRepository.save(produto);
+            return produtoService.salvar(produto);
     }
     
 }

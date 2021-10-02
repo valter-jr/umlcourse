@@ -16,7 +16,6 @@ public class Produto {
     private String nome;
     private Double preco;
 
-    @JsonBackReference
     @ManyToMany
     @JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"),
     inverseJoinColumns = @JoinColumn(name = "categoria_id"))

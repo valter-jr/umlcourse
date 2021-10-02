@@ -1,13 +1,8 @@
 package com.valterjr.umlcourse.config;
 
-import com.valterjr.umlcourse.model.Categoria;
-import com.valterjr.umlcourse.model.Cidade;
-import com.valterjr.umlcourse.model.Estado;
-import com.valterjr.umlcourse.model.Produto;
-import com.valterjr.umlcourse.repositories.CategoriaRepository;
-import com.valterjr.umlcourse.repositories.CidadeRepository;
-import com.valterjr.umlcourse.repositories.EstadoRepository;
-import com.valterjr.umlcourse.repositories.ProdutoRepository;
+import com.valterjr.umlcourse.model.*;
+import com.valterjr.umlcourse.model.enums.TipoCliente;
+import com.valterjr.umlcourse.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +28,9 @@ public class Instantiation implements CommandLineRunner {
     @Autowired
     CidadeRepository cidadeRepository;
 
+    @Autowired
+    ClienteRepository clienteRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -50,14 +48,20 @@ public class Instantiation implements CommandLineRunner {
         Cidade c2 = new Cidade(null, "São Paulo", est2);
         Cidade c3 = new Cidade(null, "Campinas", est2);
 
+        Cliente cl1 = new Cliente(null, "Banjo", "banjo@gmail.com", "77097845698",
+                TipoCliente.PESSOAFISICA);
+
+        Cliente cl2 = new Cliente(null, "Kazooie Tech", "kazooie@gmail.com", "99804596305",
+                TipoCliente.PESSOAJURIDICA);
+
+        clienteRepository.saveAll(Arrays.asList(cl1, cl2));
+
         cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
         cat2.getProdutos().addAll(List.of(p2));
 
         p1.getCategorias().addAll(List.of(cat1));
         p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
         p3.getCategorias().addAll(List.of(cat1));
-
-
 
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
         produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
