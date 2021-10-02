@@ -1,15 +1,14 @@
 package com.valterjr.umlcourse.config;
 
 import com.valterjr.umlcourse.model.*;
+import com.valterjr.umlcourse.model.enums.EstadoPagamento;
 import com.valterjr.umlcourse.model.enums.TipoCliente;
 import com.valterjr.umlcourse.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,6 +32,12 @@ public class Instantiation implements CommandLineRunner {
 
     @Autowired
     EnderecoRepository enderecoRepository;
+
+    @Autowired
+    PedidoRepository pedidoRepository;
+
+    @Autowired
+    PagamentoRepository pagamentoRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -77,12 +82,26 @@ public class Instantiation implements CommandLineRunner {
         p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
         p3.getCategorias().addAll(List.of(cat1));
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+
+        Pedido ped1 = new Pedido(null, sdf.parse("16/11/1996 10:32"), cl1, e1);
+        Pedido ped2 = new Pedido(null, sdf.parse("16/12/2021 21:22"), cl2, e2);
+
+        Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 7);
+        ped1.setPagamento(pagto1);
+
+        Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2,
+                sdf.parse("30/12/2021 00:00"), null);
+        ped2.setPagamento(pagto2);
+
         categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
         produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
         estadoRepository.saveAll(Arrays.asList(est1, est2));
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
         clienteRepository.saveAll(Arrays.asList(cl1, cl2));
         enderecoRepository.saveAll(Arrays.asList(e1, e2));
+        pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+        pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 
 
         System.out.println("Objetos Salvos");
