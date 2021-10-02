@@ -31,6 +31,9 @@ public class Instantiation implements CommandLineRunner {
     @Autowired
     ClienteRepository clienteRepository;
 
+    @Autowired
+    EnderecoRepository enderecoRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -54,6 +57,17 @@ public class Instantiation implements CommandLineRunner {
         Cliente cl2 = new Cliente(null, "Kazooie Tech", "kazooie@gmail.com", "99804596305",
                 TipoCliente.PESSOAJURIDICA);
 
+        cl1.getTelefones().addAll(Arrays.asList("123456", "7891011"));
+
+        Endereco e1 = new Endereco(null, "Rua Wenceslau", "300", "Apto 207",
+                "Jardim", "18200300", cl1, c1);
+
+        Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 700",
+                "Centro", "19800978", cl2, c2);
+
+        cl1.getEnderecos().addAll(Arrays.asList(e1, e2));
+
+
         clienteRepository.saveAll(Arrays.asList(cl1, cl2));
 
         cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
@@ -67,6 +81,9 @@ public class Instantiation implements CommandLineRunner {
         produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
         estadoRepository.saveAll(Arrays.asList(est1, est2));
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+        clienteRepository.saveAll(Arrays.asList(cl1, cl2));
+        enderecoRepository.saveAll(Arrays.asList(e1, e2));
+
 
         System.out.println("Objetos Salvos");
 
