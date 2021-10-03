@@ -1,16 +1,12 @@
 package com.valterjr.umlcourse.controller;
 
-import com.valterjr.umlcourse.model.Categoria;
 import com.valterjr.umlcourse.model.Produto;
-import com.valterjr.umlcourse.model.Produto;
-import com.valterjr.umlcourse.repositories.ProdutoRepository;
 import com.valterjr.umlcourse.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/produtos")
