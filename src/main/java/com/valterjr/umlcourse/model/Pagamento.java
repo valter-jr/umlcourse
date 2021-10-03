@@ -1,5 +1,6 @@
 package com.valterjr.umlcourse.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.valterjr.umlcourse.model.enums.EstadoPagamento;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public abstract class Pagamento {
     @OneToOne
     @JoinColumn(name = "pedido_id")
     @MapsId
+    @JsonIgnore
     private Pedido pedido;
 
     public Pagamento() {

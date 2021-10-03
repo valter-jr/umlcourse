@@ -1,5 +1,6 @@
 package com.valterjr.umlcourse.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.valterjr.umlcourse.model.enums.TipoCliente;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class Cliente {
     private Set<String> telefones = new HashSet<>();
 
     @OneToMany(mappedBy = "cliente")
+    @JsonIgnore
     private List<Pedido> pedidos = new ArrayList<>();
 
     public Cliente() {
